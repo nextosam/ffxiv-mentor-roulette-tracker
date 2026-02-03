@@ -7,33 +7,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<div class="toolbar">
-    <button onclick="exportToFile()" style="background-color: #17a2b8;">Export to File</button>
-    <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
-    <button onclick="document.getElementById('importFile').click()" style="background-color: #ffc107;">Import
-        File</button>
-    <button class="export-csv-btn" onclick="exportToCSV()">📊 Export to Excel (CSV)</button>
-</div>
-
-<div class="picker-wrapper">
-    <button class="picker-trigger" onclick="togglePickerConfig()">🎲 Random Job Picker</button>
-
-    <div id="pickerConfig" class="picker-config hidden">
-        <h3>Pick a Job Config</h3>
-        <div id="configGroups"></div>
-        <hr>
-        <button class="roll-btn" onclick="rollJob()">ROLL!</button>
-        <div id="rollResult" class="roll-result">---</div>
-    </div>
-</div>
-
 <body>
+    <div class="toolbar">
+        <button onclick="exportToFile()" style="background-color: #17a2b8;">Export to File</button>
+        <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
+        <button onclick="document.getElementById('importFile').click()" style="background-color: #ffc107;">Import
+            File</button>
+        <button class="export-csv-btn" onclick="exportToCSV()">📊 Export to Excel (CSV)</button>
+    </div>
+
+    <div class="picker-wrapper">
+        <button class="picker-trigger" onclick="togglePickerConfig()">🎲 Random Job Picker</button>
+
+        <div id="pickerConfig" class="picker-config hidden">
+            <h3>Pick a Job Config</h3>
+            <div id="configGroups"></div>
+            <hr>
+            <button class="roll-btn" onclick="rollJob()">ROLL!</button>
+            <div id="rollResult" class="roll-result">---</div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="stats-header">
             <div class="progress-section">
                 <div class="progress-labels">
                     <span id="progressText">0 / 2000</span>
-                    <button class="stats-btn" onclick="openStats()">Detailed Stats</button>
+                    <button class="stats-btn" onclick="openStats()">
+                        <img src="assets/stats_icon.png" class="btn-icon"> Detailed Stats
+                    </button>
                 </div>
                 <div class="progress-bar-container">
                     <div id="progressBar" class="progress-bar-fill"></div>
@@ -41,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <h1>Task Tracker</h1>
+        <h1>Mentor Roulette Tracker</h1>
 
 
 

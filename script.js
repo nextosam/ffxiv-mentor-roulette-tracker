@@ -354,11 +354,15 @@ function updateOverallProgress() {
     const bar = document.getElementById('progressBar');
     bar.style.width = visualWidth + "%";
 
-    // Change color if over 100%
+    // Change color if over 100% (Limit Break!)
     if (percentage >= 100) {
-        bar.style.background = "linear-gradient(90deg, #f093fb 0%, #f5576c 100%)"; // Gold/Pink for overachievers
+        // Orange/Gold for Limit Break Ready
+        bar.style.background = "linear-gradient(180deg, #ffcc00 0%, #ff6600 50%, #cc3300 100%)";
+        bar.style.boxShadow = "0 0 10px #ff6600";
     } else {
-        bar.style.background = "linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)";
+        // Blue/Cyan for Charging
+        bar.style.background = "linear-gradient(180deg, #88f1ff 0%, #00bfff 50%, #0077b3 100%)";
+        bar.style.boxShadow = "0 0 10px #00bfff";
     }
 }
 
