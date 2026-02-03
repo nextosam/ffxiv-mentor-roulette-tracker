@@ -9,15 +9,22 @@
 
 <body>
     <div class="toolbar">
-        <button onclick="exportToFile()" style="background-color: #17a2b8;">Export to File</button>
+        <button onclick="exportToFile()" class="ffxiv-btn btn-cyan">
+            <img src="assets/MainIcon35-export.png" class="btn-icon"> Export to File
+        </button>
         <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
-        <button onclick="document.getElementById('importFile').click()" style="background-color: #ffc107;">Import
-            File</button>
-        <button class="export-csv-btn" onclick="exportToCSV()">📊 Export to Excel (CSV)</button>
+        <button onclick="document.getElementById('importFile').click()" class="ffxiv-btn btn-gold">
+            <img src="assets/MainIcon35-import.png" class="btn-icon"> Import File
+        </button>
+        <button class="ffxiv-btn btn-green" onclick="exportToCSV()">
+            <img src="assets/MainIcon35-excel.png" class="btn-icon"> Export to Excel (CSV)
+        </button>
     </div>
 
     <div class="picker-wrapper">
-        <button class="picker-trigger" onclick="togglePickerConfig()">🎲 Random Job Picker</button>
+        <button class="ffxiv-btn btn-crimson picker-trigger" onclick="togglePickerConfig()">
+            <img src="assets/job_picker_icon.png" class="picker-icon"> Random Job Picker
+        </button>
 
         <div id="pickerConfig" class="picker-config hidden">
             <h3>Pick a Job Config</h3>
@@ -33,7 +40,7 @@
             <div class="progress-section">
                 <div class="progress-labels">
                     <span id="progressText">0 / 2000</span>
-                    <button class="stats-btn" onclick="openStats()">
+                    <button class="ffxiv-btn" onclick="openStats()">
                         <img src="assets/stats_icon.png" class="btn-icon"> Detailed Stats
                     </button>
                 </div>

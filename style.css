@@ -51,17 +51,21 @@ h1 {
 /* --- 3. TABLE LAYOUT --- */
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    /* Fixes rounding issues */
+    border-spacing: 0;
     margin-top: 20px;
     table-layout: auto;
     /* Lets the table adjust based on content */
 
     background-color: white;
-    /* Keep the table clean and readable */
+    /* Reverted darkening */
     color: black;
-    border-radius: 4px;
+    border-radius: 12px;
     overflow: hidden;
     /* Ensures corners match if we round them */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* Add subtle shadow for depth */
 }
 
 th,
@@ -151,35 +155,7 @@ select option {
 }
 
 /* --- 5. BUTTONS --- */
-.toolbar button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.toolbar button:hover {
-    opacity: 0.8;
-}
-
-.export-csv-btn {
-    background-color: #28a745;
-    /* "Excel Green" */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-.export-csv-btn:hover {
-    background-color: #218838;
-}
+/* Buttons replaced by .ffxiv-btn */
 
 .add-btn-bottom {
     background-color: #007bff;
@@ -197,14 +173,14 @@ select option {
     background-color: #0056b3;
 }
 
-/* FFXIV Button Style */
-.stats-btn {
+/* FFXIV Generic Button Style */
+.ffxiv-btn {
     background: linear-gradient(to bottom, #4a4a4a 0%, #2b2b2b 100%);
     color: #e0e0e0;
     border: 1px solid #000;
     border-top: 1px solid #6e6e6e;
     /* Top highlight for 3D effect */
-    padding: 6px 16px;
+    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -218,23 +194,40 @@ select option {
     display: flex;
     align-items: center;
     gap: 8px;
+    justify-content: center;
+}
+
+.ffxiv-btn:hover {
+    background: linear-gradient(to bottom, #5a5a5a 0%, #3a3a3a 100%);
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.ffxiv-btn:active {
+    background: linear-gradient(to bottom, #2b2b2b 0%, #4a4a4a 100%);
+    transform: translateY(1px);
+}
+
+/* Distinct Hover Colors */
+.btn-cyan:hover {
+    box-shadow: 0 0 8px rgba(23, 162, 184, 0.6);
+    border-color: #17a2b8;
+}
+
+.btn-gold:hover {
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.6);
+    border-color: #ffc107;
+}
+
+.btn-green:hover {
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+    border-color: #28a745;
 }
 
 .btn-icon {
     width: 20px;
     height: auto;
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
-}
-
-.stats-btn:hover {
-    background: linear-gradient(to bottom, #5a5a5a 0%, #3a3a3a 100%);
-    color: #fff;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-.stats-btn:active {
-    background: linear-gradient(to bottom, #2b2b2b 0%, #4a4a4a 100%);
-    transform: translateY(1px);
 }
 
 /* --- 6. COMPONENTS --- */
@@ -282,31 +275,54 @@ select option {
     margin-bottom: 20px;
 }
 
-.picker-trigger {
-    background-color: #6f42c1;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
+.btn-crimson:hover {
+    box-shadow: 0 0 12px rgba(220, 20, 60, 0.6);
+    /* Crimson glow */
+    border-color: #dc143c;
+    background: linear-gradient(to bottom, #a61b2e 0%, #72111f 100%);
 }
 
-.picker-trigger:hover {
-    background-color: #5a32a3;
+.picker-trigger {
+    /* Larger than standard buttons */
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    background: linear-gradient(to bottom, #8a1526 0%, #5c0e19 100%);
+    /* Darkish Red base */
+}
+
+.picker-icon {
+    width: 28px;
+    /* Bigger icon for the main button */
+    height: auto;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.6));
+    margin-right: 5px;
 }
 
 .picker-config {
     position: absolute;
-    top: 45px;
+    top: 55px;
+    /* Moved down slightly */
     left: 0;
     z-index: 100;
-    background: white;
-    border: 1px solid #ddd;
+
+    /* FFXIV Dark Modal Style */
+    background: linear-gradient(to bottom, #3E3E3E 0%, #252525 100%);
+    border: 2px solid #b39c56;
+    /* Gold border */
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     width: 250px;
+    color: #f2f2f2;
+    /* Light text */
+}
+
+.picker-config h3 {
+    margin-top: 0;
+    color: #e2d195;
+    border-bottom: 1px solid #b39c56;
+    padding-bottom: 5px;
+    text-align: center;
 }
 
 .config-group-label {
@@ -314,6 +330,7 @@ select option {
     display: block;
     margin: 10px 0 5px 0;
     user-select: none;
+    color: #ccc;
 }
 
 .config-item {
@@ -327,23 +344,41 @@ select option {
 
 .roll-btn {
     width: 100%;
-    background: #6f42c1;
-    color: white;
-    border: none;
+    /* Gold/Orange Button for Action */
+    background: linear-gradient(to bottom, #ffc107 0%, #d39e00 100%);
+    color: #333;
+    border: 1px solid #b28606;
     padding: 10px;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+.roll-btn:hover {
+    background: linear-gradient(to bottom, #ffca2c 0%, #e0a800 100%);
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
 }
 
 .roll-result {
-    margin-top: 10px;
+    margin-top: 15px;
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
-    padding: 10px;
-    background: #f8f9fa;
+    color: #fff;
+    padding: 15px;
+    background: #1a1a1a;
+    /* Not pure black */
+    border: 1px solid #444;
     border-radius: 4px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    min-height: 40px;
+    /* Prevent jump */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Stats Header & Progress Bar */

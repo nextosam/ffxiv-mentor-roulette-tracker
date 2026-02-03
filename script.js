@@ -318,9 +318,18 @@ function rollJob() {
     const randomIndex = Math.floor(Math.random() * activeJobs.length);
     const selected = activeJobs[randomIndex];
 
-    // Simple animation effect
+    // Dynamic color and glow based on job category
     const resultDiv = document.getElementById('rollResult');
-    resultDiv.style.color = "#6f42c1";
+    let jobColor = "#fff";
+    for (let group in jobGroups) {
+        if (jobGroups[group].jobs.includes(selected)) {
+            jobColor = jobGroups[group].color;
+            break;
+        }
+    }
+
+    resultDiv.style.color = jobColor;
+    resultDiv.style.textShadow = `0 0 8px ${jobColor}, 0 0 15px ${jobColor}, 1px 1px 2px #000`;
     resultDiv.innerText = selected;
 }
 
