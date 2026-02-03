@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Duty Tracker</title>
@@ -9,16 +10,18 @@
 <div class="toolbar">
     <button onclick="exportToFile()" style="background-color: #17a2b8;">Export to File</button>
     <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
-    <button onclick="document.getElementById('importFile').click()" style="background-color: #ffc107;">Import File</button>
+    <button onclick="document.getElementById('importFile').click()" style="background-color: #ffc107;">Import
+        File</button>
     <button class="export-csv-btn" onclick="exportToCSV()">📊 Export to Excel (CSV)</button>
 </div>
 
 <div class="picker-wrapper">
     <button class="picker-trigger" onclick="togglePickerConfig()">🎲 Random Job Picker</button>
-    
+
     <div id="pickerConfig" class="picker-config hidden">
         <h3>Pick a Job Config</h3>
-        <div id="configGroups"></div> <hr>
+        <div id="configGroups"></div>
+        <hr>
         <button class="roll-btn" onclick="rollJob()">ROLL!</button>
         <div id="rollResult" class="roll-result">---</div>
     </div>
@@ -33,17 +36,14 @@
                     <button class="stats-btn" onclick="openStats()">Detailed Stats</button>
                 </div>
                 <div class="progress-bar-container">
-                    <div id="progressBar" class="progress-bar-fill">
-                        <span id="percentText">0%</span>
-                    </div>
+                    <div id="progressBar" class="progress-bar-fill"></div>
+                    <span id="percentText">0%</span>
                 </div>
             </div>
         </div>
         <h1>Task Tracker</h1>
-        
-        <div class="controls">
-            <button onclick="addRow()">Add New Entry</button>
-        </div>
+
+
 
         <table>
             <thead>
@@ -59,7 +59,7 @@
                 </tr>
             </thead>
             <tbody id="trackerBody">
-                </tbody>
+            </tbody>
         </table>
         <div class="bottom-controls">
             <button class="add-btn-bottom" onclick="addRow()">+ Add New Entry</button>
@@ -74,9 +74,9 @@
                 <button class="close-modal" onclick="closeStats()">×</button>
             </div>
             <div id="statsBody" class="modal-body">
-                </div>
+            </div>
         </div>
     </div>
 </body>
-</html>
 
+</html>

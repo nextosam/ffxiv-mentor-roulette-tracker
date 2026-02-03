@@ -1,28 +1,47 @@
-/* --- 1. GLOBAL STYLES --- */
+/* --- 1. GLOBAL & RESET --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f2f5;
     padding: 20px;
 }
 
+/* --- 2. LAYOUT & CONTAINERS --- */
 .container {
-    max-width: 1200px; /* Bumped up slightly to fit more columns */
+    max-width: 1200px;
+    /* Bumped up slightly to fit more columns */
     margin: auto;
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- 2. TABLE LAYOUT --- */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.bottom-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    /* Centers the button */
+}
+
+/* --- 3. TABLE LAYOUT --- */
 table {
     width: 100%;
-    border-collapse: collapse; 
+    border-collapse: collapse;
     margin-top: 20px;
-    table-layout: auto; /* Lets the table adjust based on content */
+    table-layout: auto;
+    /* Lets the table adjust based on content */
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
@@ -33,45 +52,54 @@ th {
     font-weight: bold;
 }
 
-/* --- 3. COLUMN WIDTHS --- */
+/* --- COLUMN WIDTHS --- */
 
 /* RUN (Col 1) and PROGRESS (Col 2) - Narrow */
-th:nth-child(1), td:nth-child(1),
-th:nth-child(2), td:nth-child(2) {
+th:nth-child(1),
+td:nth-child(1),
+th:nth-child(2),
+td:nth-child(2) {
     width: 60px;
     text-align: center;
 }
 
 /* DUTY TYPE (Col 3) and DUTY NAME (Col 4) - Medium */
-th:nth-child(3), td:nth-child(3),
-th:nth-child(4), td:nth-child(4) {
+th:nth-child(3),
+td:nth-child(3),
+th:nth-child(4),
+td:nth-child(4) {
     min-width: 160px;
 }
 
 /* JOB (Col 5) - Small but not squished */
-th:nth-child(5), td:nth-child(5) {
+th:nth-child(5),
+td:nth-child(5) {
     width: 90px;
     text-align: center;
 }
 
 /* CLEAR (Col 6) - Small */
-th:nth-child(6), td:nth-child(6) {
+th:nth-child(6),
+td:nth-child(6) {
     width: 50px;
     text-align: center;
 }
 
 /* NOTES (The last column) - Takes remaining space */
-th:last-child, td:last-child {
+th:last-child,
+td:last-child {
     min-width: 200px;
 }
 
-/* --- 4. INPUT & DROPDOWN STYLING --- */
-input, select {
+/* --- 4. FORMS & INPUTS --- */
+input,
+select {
     width: 100%;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Crucial: keeps padding inside the width */
+    box-sizing: border-box;
+    /* Crucial: keeps padding inside the width */
     font-family: inherit;
 }
 
@@ -85,12 +113,6 @@ input[type="checkbox"] {
     text-align: center;
 }
 
-
-.clear-cell {
-    background-color: #ffcccc; /* Starts red (unset) */
-    transition: background-color 0.3s; /* Makes the color change smooth */
-}
-
 /* Make dropdowns look better when colored */
 select {
     transition: background-color 0.2s;
@@ -99,18 +121,12 @@ select {
 
 /* Optional: darken the text slightly if background is light */
 select option {
-    background-color: white; /* Keeps the dropdown list clean */
+    background-color: white;
+    /* Keeps the dropdown list clean */
     color: black;
 }
 
-.toolbar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eee;
-}
-
+/* --- 5. BUTTONS --- */
 .toolbar button {
     padding: 10px 15px;
     border: none;
@@ -126,7 +142,8 @@ select option {
 }
 
 .export-csv-btn {
-    background-color: #28a745; /* "Excel Green" */
+    background-color: #28a745;
+    /* "Excel Green" */
     color: white;
     border: none;
     padding: 8px 15px;
@@ -138,12 +155,6 @@ select option {
 
 .export-csv-btn:hover {
     background-color: #218838;
-}
-
-.bottom-controls {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center; /* Centers the button */
 }
 
 .add-btn-bottom {
@@ -162,7 +173,27 @@ select option {
     background-color: #0056b3;
 }
 
-/* Delete button */
+.stats-btn {
+    background: #41b5f8;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* --- 6. COMPONENTS --- */
+
+/* Clear Cell */
+.clear-cell {
+    background-color: #ffcccc;
+    /* Starts red (unset) */
+    transition: background-color 0.3s;
+    /* Makes the color change smooth */
+}
+
+/* Run Cell & Delete Button */
 .run-cell {
     position: relative;
     cursor: default;
@@ -183,13 +214,32 @@ select option {
     cursor: pointer;
 }
 
-.run-cell:hover .run-number { visibility: hidden; }
-.run-cell:hover .delete-btn-overlay { display: block; }
+.run-cell:hover .run-number {
+    visibility: hidden;
+}
 
-/*job picker i think*/
+.run-cell:hover .delete-btn-overlay {
+    display: block;
+}
+
+/* Job Picker */
 .picker-wrapper {
     position: relative;
     margin-bottom: 20px;
+}
+
+.picker-trigger {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.picker-trigger:hover {
+    background-color: #5a32a3;
 }
 
 .picker-config {
@@ -201,11 +251,9 @@ select option {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     width: 250px;
 }
-
-.hidden { display: none; }
 
 .config-group-label {
     font-weight: bold;
@@ -242,22 +290,7 @@ select option {
     border-radius: 4px;
 }
 
-.picker-trigger {
-    background-color: #6f42c1;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
-}
-
-.picker-trigger:hover {
-    background-color: #5a32a3;
-}
-/*job picker i think^*/
-
-/* stats*/
+/* Stats Header & Progress Bar */
 .stats-header {
     background: #fff;
     padding: 20px;
@@ -279,73 +312,38 @@ select option {
     width: 100%;
     height: 35px;
     background-color: #e9ecef;
-    border-radius: 50px; /* Pill shape from your drawing */
+    border-radius: 50px;
+    /* Pill shape */
     overflow: hidden;
     border: 2px solid #ddd;
+    position: relative;
 }
 
 .progress-bar-fill {
     height: 100%;
-    width: 0%; /* JS will change this */
+    width: 0%;
+    /* JS will change this */
     background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: width 0.5s ease-in-out;
 }
 
 #percentText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #fff;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    /* Ensures readability on both light gray and blue */
+    z-index: 10;
 }
 
-.stats-btn {
-    background: #41b5f8;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-/* Modal Overlay - Background Dimmer */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-/* The actual window */
-.modal-content {
-    background: white;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 12px;
-    padding: 25px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 2px solid #eee;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-}
-
-.close-modal {
-    background: none; border: none; font-size: 2rem; cursor: pointer;
-}
-
-/* Stat Card Styling */
+/* Stat Cards */
 .stat-card {
     background: #f8f9fa;
     border-radius: 8px;
@@ -359,43 +357,25 @@ select option {
     margin: 5px 0;
 }
 
-.hidden { display: none !important; }
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Ensure this number is higher than your sticky header */
-    z-index: 9999; 
+/* Clear Rate Card */
+.clear-rate-card {
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
 
-.no-scroll {
-    overflow: hidden;
+.big-stat {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
 }
 
-/* Ensure the modal content doesn't close when you click INSIDE it */
-.modal-content {
-    /* ... keep existing styles ... */
-    pointer-events: auto;
+.clear-rate-card h3 {
+    margin: 0;
+    opacity: 0.9;
 }
 
-.modal-overlay {
-    /* ... existing styles ... */
-    cursor: pointer;
-}
-
-.modal-content {
-    /* ... existing styles ... */
-    cursor: default; /* Keeps the normal pointer inside the stats window */
-}
-
- /*this is the stats chart */
+/* Stats Chart */
 .chart-row {
     margin-bottom: 10px;
 }
@@ -424,6 +404,7 @@ select option {
     transition: width 1s ease-out;
 }
 
+/* Tabs */
 .stat-tabs {
     display: flex;
     gap: 10px;
@@ -446,35 +427,72 @@ select option {
     color: white;
 }
 
-.hidden { display: none !important; }
+.tab-content {
+    animation: fadeIn 0.3s;
+}
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- 7. MODALS --- */
+
+/* Modal Overlay - Background Dimmer */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+/* The actual window */
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    padding: 25px;
+    max-height: 80vh;
+    overflow-y: auto;
+    cursor: default;
+    /* Keep normal pointer inside */
+    pointer-events: auto;
+    /* Ensure clicks work */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* --- 8. UTILITIES --- */
 .hidden {
     display: none !important;
 }
 
-.tab-content {
-    animation: fadeIn 0.3s; /* Optional: adds a nice fade when switching tabs */
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* clear rate */
-.clear-rate-card {
-    text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.big-stat {
-    font-size: 3rem;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.clear-rate-card h3 {
-    margin: 0;
-    opacity: 0.9;
+.no-scroll {
+    overflow: hidden;
 }
