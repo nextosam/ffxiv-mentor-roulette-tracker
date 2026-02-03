@@ -259,6 +259,7 @@ select option {
     font-weight: bold;
     display: block;
     margin: 10px 0 5px 0;
+    user-select: none;
 }
 
 .config-item {
@@ -267,6 +268,7 @@ select option {
     gap: 8px;
     margin-left: 10px;
     font-size: 0.9em;
+    user-select: none;
 }
 
 .roll-btn {

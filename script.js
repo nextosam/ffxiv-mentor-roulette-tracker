@@ -235,13 +235,18 @@ function togglePickerConfig() {
 
 function renderPickerConfig() {
     const container = document.getElementById('configGroups');
-
-    // Clear it out properly so it doesn't duplicate but ensures it runs
     container.innerHTML = "";
+
+    // Load saved state (list of UNCHECKED jobs)
+    const savedState = localStorage.getItem('pickerState');
+    const uncheckedJobs = savedState ? JSON.parse(savedState) : [];
 
     for (const group in jobGroups) {
         const groupDiv = document.createElement('div');
         groupDiv.style.marginBottom = "10px";
+
+        // Define Group Check Logic: specific check if all children are checked? 
+        // For simplicity, we default group check to true, logic elsewhere handles the "check all" behavior visually
 
         // Group Header
         groupDiv.innerHTML = `
@@ -252,10 +257,14 @@ function renderPickerConfig() {
 
         // Individual Jobs
         jobGroups[group].jobs.forEach(job => {
-            const item = document.createElement('div');
+            const isChecked = !uncheckedJobs.includes(job);
+            const checkedAttr = isChecked ? 'checked' : '';
+
+            const item = document.createElement('label');
             item.className = 'config-item';
+            item.style.cursor = 'pointer';
             item.innerHTML = `
-                <input type="checkbox" checked class="job-toggle" data-group="${group}" data-job="${job}"> ${job}
+                <input type="checkbox" ${checkedAttr} class="job-toggle" data-group="${group}" data-job="${job}"> ${job}
             `;
             groupDiv.appendChild(item);
         });
@@ -263,14 +272,29 @@ function renderPickerConfig() {
         container.appendChild(groupDiv);
     }
 
-    // Add a single listener for all group toggles
-    container.querySelectorAll('.group-toggle').forEach(toggle => {
-        toggle.addEventListener('change', (e) => {
-            const groupName = e.target.dataset.group;
-            const children = container.querySelectorAll(`.job-toggle[data-group="${groupName}"]`);
-            children.forEach(cb => cb.checked = e.target.checked);
+    // Add listeners
+    container.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', () => {
+            savePickerState();
+            // If group toggle, update children visually
+            if (input.classList.contains('group-toggle')) {
+                const groupName = input.dataset.group;
+                const children = container.querySelectorAll(`.job-toggle[data-group="${groupName}"]`);
+                children.forEach(cb => cb.checked = input.checked);
+                savePickerState(); // Save again after children update
+            }
         });
     });
+}
+
+function savePickerState() {
+    const unchecked = [];
+    document.querySelectorAll('.job-toggle').forEach(cb => {
+        if (!cb.checked) {
+            unchecked.push(cb.dataset.job);
+        }
+    });
+    localStorage.setItem('pickerState', JSON.stringify(unchecked));
 }
 
 // When you toggle a Role (like "Tanks"), it checks/unchecks all jobs in that group
@@ -493,9 +517,22 @@ function closeStats() {
 
 // 7. Click Outside to Close Logic
 window.onclick = function (event) {
+    // Modals
     const modal = document.getElementById("statsModal");
     if (event.target === modal) {
         closeStats();
+    }
+
+    // Job Picker Close
+    const pickerMenu = document.getElementById('pickerConfig');
+    const pickerTrigger = document.querySelector('.picker-trigger');
+
+    // If text is not hidden ...
+    if (!pickerMenu.classList.contains('hidden')) {
+        // ... and we didn't click the menu or the button
+        if (!pickerMenu.contains(event.target) && event.target !== pickerTrigger) {
+            pickerMenu.classList.add('hidden');
+        }
     }
 }
 // --- 4. DATA LOGIC (SAVE/LOAD) ---
