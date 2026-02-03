@@ -157,21 +157,7 @@ select option {
 /* --- 5. BUTTONS --- */
 /* Buttons replaced by .ffxiv-btn */
 
-.add-btn-bottom {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s;
-}
-
-.add-btn-bottom:hover {
-    background-color: #0056b3;
-}
+/* .add-btn-bottom replaced by .ffxiv-btn.btn-crimson.picker-trigger */
 
 /* FFXIV Generic Button Style */
 .ffxiv-btn {
@@ -275,19 +261,32 @@ select option {
     margin-bottom: 20px;
 }
 
+.btn-crimson,
+.btn-crimson:hover {
+    background: linear-gradient(to bottom, #8a1526 0%, #5c0e19 100%);
+}
+
 .btn-crimson:hover {
     box-shadow: 0 0 12px rgba(220, 20, 60, 0.6);
-    /* Crimson glow */
     border-color: #dc143c;
     background: linear-gradient(to bottom, #a61b2e 0%, #72111f 100%);
+}
+
+.btn-blue,
+.btn-blue:hover {
+    background: linear-gradient(to bottom, #1a4a8a 0%, #0d2e5c 100%);
+}
+
+.btn-blue:hover {
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+    border-color: #007bff;
+    background: linear-gradient(to bottom, #2a5aaa 0%, #1a3e7a 100%);
 }
 
 .picker-trigger {
     /* Larger than standard buttons */
     padding: 12px 24px;
     font-size: 1.1rem;
-    background: linear-gradient(to bottom, #8a1526 0%, #5c0e19 100%);
-    /* Darkish Red base */
 }
 
 .picker-icon {
@@ -468,10 +467,22 @@ h1 {
 
 /* Stat Cards */
 .stat-card {
-    background: #f8f9fa;
+    background: rgba(0, 0, 0, 0.3);
+    /* Dark, semi-transparent */
+    border: 1px solid #444;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
+    color: #f2f2f2;
+}
+
+.stat-card h3 {
+    margin-top: 0;
+    color: #e2d195;
+    /* Gold for headers */
+    border-bottom: 1px solid #b39c56;
+    padding-bottom: 5px;
+    font-size: 1.1rem;
 }
 
 .stat-row {
@@ -483,7 +494,9 @@ h1 {
 /* Clear Rate Card */
 .clear-rate-card {
     text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
+    /* Deep blue MSQ vibe */
+    border: 2px solid #b39c56;
     color: white;
 }
 
@@ -510,10 +523,13 @@ h1 {
 }
 
 .chart-bar-bg {
-    background: #e9ecef;
+    background: #111;
+    /* Dark track */
+    border: 1px solid #333;
     border-radius: 4px;
     height: 20px;
     width: 100%;
+    overflow: hidden;
 }
 
 .chart-bar-fill {
@@ -532,22 +548,33 @@ h1 {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
+    border-bottom: 1px solid #b39c56;
     padding-bottom: 10px;
 }
 
 .tab-btn {
     padding: 8px 20px;
-    border: none;
-    background: #e9ecef;
-    border-radius: 20px;
+    border: 1px solid #000;
+    background: linear-gradient(to bottom, #4a4a4a 0%, #2b2b2b 100%);
+    color: #ccc;
+    border-radius: 4px;
+    /* Squarer caps for FFXIV */
     cursor: pointer;
     font-weight: bold;
+    transition: all 0.2s;
 }
 
 .tab-btn.active {
-    background: #007bff;
+    background: linear-gradient(to bottom, #8a1526 0%, #5c0e19 100%);
+    /* Crimson active */
     color: white;
+    box-shadow: 0 0 8px rgba(138, 21, 38, 0.5);
+    border-color: #dc143c;
+}
+
+.tab-btn:hover:not(.active) {
+    background: linear-gradient(to bottom, #5a5a5a 0%, #3a3a3a 100%);
+    color: #fff;
 }
 
 .tab-content {
@@ -583,32 +610,47 @@ h1 {
 
 /* The actual window */
 .modal-content {
-    background: white;
+    background: linear-gradient(to bottom, #3E3E3E 0%, #252525 100%);
+    border: 3px solid #b39c56;
     width: 90%;
-    max-width: 600px;
+    max-width: 700px;
+    /* Slightly wider */
     border-radius: 12px;
     padding: 25px;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
     cursor: default;
-    /* Keep normal pointer inside */
     pointer-events: auto;
-    /* Ensure clicks work */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    color: #f2f2f2;
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #eee;
+    align-items: center;
+    border-bottom: 1px solid #b39c56;
     margin-bottom: 20px;
     padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #e2d195;
+    text-shadow: 1px 1px 2px #000;
 }
 
 .close-modal {
     background: none;
     border: none;
     font-size: 2rem;
+    color: #ccc;
     cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #e2d195;
 }
 
 /* --- 8. UTILITIES --- */
