@@ -3,34 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Duty Tracker</title>
+    <title data-i18n="title">Duty Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="toolbar">
         <button onclick="exportToFile()" class="ffxiv-btn btn-cyan">
-            <img src="assets/MainIcon35-export.png" class="btn-icon"> Export to File
+            <img src="assets/MainIcon35-export.png" class="btn-icon"> <span data-i18n="exportToFile">Export to
+                File</span>
         </button>
         <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
         <button onclick="document.getElementById('importFile').click()" class="ffxiv-btn btn-gold">
-            <img src="assets/MainIcon35-import.png" class="btn-icon"> Import File
+            <img src="assets/MainIcon35-import.png" class="btn-icon"> <span data-i18n="importFile">Import File</span>
         </button>
         <button class="ffxiv-btn btn-green" onclick="exportToCSV()">
-            <img src="assets/MainIcon35-excel.png" class="btn-icon"> Export to Excel (CSV)
+            <img src="assets/MainIcon35-excel.png" class="btn-icon"> <span data-i18n="exportToExcel">Export to Excel
+                (CSV)</span>
         </button>
+
+        <div class="lang-switcher">
+            <button onclick="toggleLanguage()" class="ffxiv-btn lang-btn">EN / RU</button>
+        </div>
     </div>
 
     <div class="picker-wrapper">
         <button class="ffxiv-btn btn-crimson picker-trigger" onclick="togglePickerConfig()">
-            <img src="assets/job_picker_icon.png" class="picker-icon"> Random Job Picker
+            <img src="assets/job_picker_icon.png" class="picker-icon"> <span data-i18n="randomJobPicker">Random Job
+                Picker</span>
         </button>
 
         <div id="pickerConfig" class="picker-config hidden">
-            <h3>Pick a Job Config</h3>
+            <h3 data-i18n="pickJobConfig">Pick a Job Config</h3>
             <div id="configGroups"></div>
             <hr>
-            <button class="roll-btn" onclick="rollJob()">ROLL!</button>
+            <button class="roll-btn" data-i18n="roll" onclick="rollJob()">ROLL!</button>
             <div id="rollResult" class="roll-result">---</div>
         </div>
     </div>
@@ -41,7 +48,8 @@
                 <div class="progress-labels">
                     <span id="progressText">0 / 2000</span>
                     <button class="ffxiv-btn" onclick="openStats()">
-                        <img src="assets/stats_icon.png" class="btn-icon"> Detailed Stats
+                        <img src="assets/stats_icon.png" class="btn-icon"> <span data-i18n="detailedStats">Detailed
+                            Stats</span>
                     </button>
                 </div>
                 <div class="progress-bar-container">
@@ -50,36 +58,39 @@
                 </div>
             </div>
         </div>
-        <h1>Mentor Roulette Tracker</h1>
+        <h1 data-i18n="headerTitle">Mentor Roulette Tracker</h1>
 
 
 
         <table>
             <thead>
                 <tr>
-                    <th>Run</th>
-                    <th>Progress</th>
-                    <th>Duty Type</th>
-                    <th>Duty Name</th>
-                    <th>Job</th>
-                    <th>Clear</th>
-                    <th>Timestamp</th>
-                    <th>Notes</th>
+                    <th data-i18n="tableRun">Run</th>
+                    <th data-i18n="tableProgress">Progress</th>
+                    <th data-i18n="tableType">Duty Type</th>
+                    <th data-i18n="tableName">Duty Name</th>
+                    <th data-i18n="tableJob">Job</th>
+                    <th data-i18n="tableClear">Clear</th>
+                    <th data-i18n="tableTimestamp">Timestamp</th>
+                    <th data-i18n="tableNotes">Notes</th>
                 </tr>
             </thead>
             <tbody id="trackerBody">
             </tbody>
         </table>
         <div class="bottom-controls">
-            <button class="ffxiv-btn btn-blue picker-trigger" onclick="addRow()">+ Add New Entry</button>
+            <button class="ffxiv-btn btn-blue picker-trigger" onclick="addRow()" data-i18n="addNewEntry">+ Add New
+                Entry</button>
         </div>
     </div>
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 
     <div id="statsModal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><img src="assets/stats_icon.png" class="btn-icon"> Detailed Statistics</h2>
+                <h2><img src="assets/stats_icon.png" class="btn-icon"> <span data-i18n="statsTitle">Detailed
+                        Statistics</span></h2>
                 <button class="close-modal" onclick="closeStats()">×</button>
             </div>
             <div id="statsBody" class="modal-body">

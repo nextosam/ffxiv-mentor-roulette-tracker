@@ -661,3 +661,16 @@ h1 {
 .no-scroll {
     overflow: hidden;
 }
+
+/* --- 9. LOCALIZATION --- */
+.lang-switcher {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.lang-btn {
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    min-width: 80px;
+}

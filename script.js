@@ -68,6 +68,49 @@ const dutyLibrary = {
     }
 };
 
+let currentLanguage = localStorage.getItem('language') || 'en';
+
+function t(key) {
+    return (translations[currentLanguage] && translations[currentLanguage][key]) || key;
+}
+
+function updateUI() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.innerText = t(key);
+    });
+
+    // Update placeholders for existing rows
+    document.querySelectorAll('.note-input').forEach(el => {
+        el.placeholder = t('placeholderNote');
+    });
+
+    // Update selects already in table
+    document.querySelectorAll('.type-select').forEach(sel => {
+        const firstOpt = sel.options[0];
+        if (firstOpt && firstOpt.value === "") firstOpt.textContent = t('placeholderType');
+    });
+    document.querySelectorAll('.name-select').forEach(sel => {
+        const firstOpt = sel.options[0];
+        if (firstOpt && firstOpt.value === "") firstOpt.textContent = t('placeholderName');
+    });
+    document.querySelectorAll('.job-select').forEach(sel => {
+        const firstOpt = sel.options[0];
+        if (firstOpt && firstOpt.value === "") firstOpt.textContent = t('placeholderJob');
+    });
+}
+
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'en' ? 'ru' : 'en';
+    localStorage.setItem('language', currentLanguage);
+    updateUI();
+    // Re-render picker if open
+    const menu = document.getElementById('pickerConfig');
+    if (!menu.classList.contains('hidden')) {
+        renderPickerConfig();
+    }
+}
+
 const jobGroups = {
     "Tanks": {
         color: "#798ded",
@@ -129,15 +172,15 @@ function addRow() {
     row.innerHTML = `
         <td class="run-cell">
         <span class="run-number">${runCount}</span>
-        <button class="delete-btn-overlay" onclick="deleteRow(this)">×</button>
+        <button class="delete-btn-overlay" title="${t('deleteConfirm')}" onclick="deleteRow(this)">×</button>
     </td>
         <td><input type="number" class="progress-input" value="${initialProgress}"></td>
-        <td><select class="type-select" onchange="updateDutyNames(this)">${typeOptions}</select></td>
-        <td><select class="name-select" onchange="applyNameColor(this)"><option value="">--Name--</option></select></td>
-        <td><select class="job-select" onchange="applyJobColor(this)">${jobOptions}</select></td>
+        <td><select class="type-select" onchange="updateDutyNames(this)"><option value="">${t('placeholderType')}</option>${typeOptions.replace('<option value="">--Type--</option>', '')}</select></td>
+        <td><select class="name-select" onchange="applyNameColor(this)"><option value="">${t('placeholderName')}</option></select></td>
+        <td><select class="job-select" onchange="applyJobColor(this)"><option value="">${t('placeholderJob')}</option>${jobOptions.replace('<option value="">--Job--</option>', '')}</select></td>
         <td class="clear-cell"><input type="checkbox" class="clear-checkbox" onchange="applyCheckColor(this)"></td>
         <td style="font-size: 0.8em; color: #666; white-space: nowrap;">${getFormattedTimestamp()}</td>
-        <td><input type="text" class="note-input" placeholder="Add a note..."></td>
+        <td><input type="text" class="note-input" placeholder="${t('placeholderNote')}"></td>
     `;
 
     tableBody.appendChild(row);
@@ -145,7 +188,7 @@ function addRow() {
 }
 
 function deleteRow(btn) {
-    if (confirm("Are you sure you want to delete this run?")) {
+    if (confirm(t('confirmDelete'))) {
         const row = btn.closest('tr');
         row.remove();
 
@@ -176,7 +219,7 @@ function updateDutyNames(typeElement) {
     const chosenColor = selectedType ? dutyLibrary[selectedType].color : "white";
     typeElement.style.backgroundColor = chosenColor;
 
-    nameSelect.innerHTML = '<option value="">--Name--</option>';
+    nameSelect.innerHTML = `<option value="">${t('placeholderName')}</option>`;
     if (selectedType) {
         dutyLibrary[selectedType].list.forEach(name => {
             const opt = document.createElement('option');
@@ -249,9 +292,10 @@ function renderPickerConfig() {
         // For simplicity, we default group check to true, logic elsewhere handles the "check all" behavior visually
 
         // Group Header
+        const groupLabel = group === "Tanks" ? t('roleTanks').replace(':', '') : (group === "Healers" ? t('roleHealers').replace(':', '') : t('roleDPS').replace(':', ''));
         groupDiv.innerHTML = `
             <label class="config-group-label">
-                <input type="checkbox" checked class="group-toggle" data-group="${group}"> ${group}
+                <input type="checkbox" checked class="group-toggle" data-group="${group}"> ${groupLabel}
             </label>
         `;
 
@@ -311,7 +355,7 @@ function rollJob() {
     jobChecks.forEach(cb => activeJobs.push(cb.dataset.job));
 
     if (activeJobs.length === 0) {
-        document.getElementById('rollResult').innerText = "Pick one!";
+        document.getElementById('rollResult').innerText = t('rollPickOne');
         return;
     }
 
@@ -380,7 +424,7 @@ function openStats() {
     const data = saved ? JSON.parse(saved) : [];
 
     if (data.length === 0) {
-        alert("Add some entries to the table first to see stats!");
+        alert(t('statsAlert'));
         return;
     }
 
@@ -465,38 +509,38 @@ function openStats() {
     statsBody.innerHTML = `
     <div class="overall-summary">
         <div class="stat-card clear-rate-card">
-            <h3>Overall Clear Rate</h3>
+            <h3 data-i18n="statsClearRate">${t('statsClearRate')}</h3>
             <div class="big-stat">${clearRate}%</div>
-            <p>${clearCount} clears out of ${data.length} total runs</p>
+            <p>${clearCount} ${t('statsClearsOutOf')} ${data.length} ${t('statsTotalRuns')}</p>
         </div>
     </div>
     
     <div class="stat-tabs">
-        <button class="tab-btn active" onclick="showTab('jobs')">Jobs</button>
-        <button class="tab-btn" onclick="showTab('duties')">Duties</button>
+        <button class="tab-btn active" onclick="showTab('jobs')" data-i18n="tabJobs">${t('tabJobs')}</button>
+        <button class="tab-btn" onclick="showTab('duties')" data-i18n="tabDuties">${t('tabDuties')}</button>
     </div>
 
     <div id="jobStats" class="tab-content">
         <div class="stat-card">
-            <h3>🛡️ Role Breakdown</h3>
-            <div class="stat-row"><span>Tanks:</span> <span>${roleCounts["Tanks"]}</span></div>
-            <div class="stat-row"><span>Healers:</span> <span>${roleCounts["Healers"]}</span></div>
-            <div class="stat-row"><span>DPS:</span> <span>${roleCounts["DPS"]}</span></div>
+            <h3 data-i18n="roleBreakdown">${t('roleBreakdown')}</h3>
+            <div class="stat-row"><span data-i18n="roleTanks">${t('roleTanks')}</span> <span>${roleCounts["Tanks"]}</span></div>
+            <div class="stat-row"><span data-i18n="roleHealers">${t('roleHealers')}</span> <span>${roleCounts["Healers"]}</span></div>
+            <div class="stat-row"><span data-i18n="roleDPS">${t('roleDPS')}</span> <span>${roleCounts["DPS"]}</span></div>
         </div>
         <div class="stat-card">
-            <h3>📈 Job Usage</h3>
-            ${jobRowsHtml || "<p>No jobs tracked yet.</p>"}
+            <h3 data-i18n="jobUsage">${t('jobUsage')}</h3>
+            ${jobRowsHtml || `<p data-i18n="noJobsTracked">${t('noJobsTracked')}</p>`}
         </div>
     </div>
 
     <div id="dutyStats" class="tab-content hidden">
         <div class="stat-card">
-            <h3>🌍 Expansion Breakdown</h3>
-            ${typeRowsHtml || "<p>No duties tracked yet.</p>"}
+            <h3 data-i18n="expansionBreakdown">${t('expansionBreakdown')}</h3>
+            ${typeRowsHtml || `<p data-i18n="noDutiesTracked">${t('noDutiesTracked')}</p>`}
         </div>
         <div class="stat-card">
-            <h3>🔥 Top 5 Most Run Duties</h3>
-            ${topDutiesHtml || "<p>No duties recorded yet.</p>"}
+            <h3 data-i18n="topDuties">${t('topDuties')}</h3>
+            ${topDutiesHtml || `<p data-i18n="noDutiesRecorded">${t('noDutiesRecorded')}</p>`}
         </div>
     </div>
     `;
@@ -605,6 +649,8 @@ function loadFromData(data) {
 
 // --- 5. INITIALIZATION ---
 window.onload = () => {
+    updateUI();
+
     const saved = localStorage.getItem("trackerData");
     if (saved) {
         try {
