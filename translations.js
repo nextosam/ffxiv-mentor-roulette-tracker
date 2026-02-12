@@ -48,7 +48,13 @@ const translations = {
         dataCopied: "Data copied to clipboard!",
         dataImported: "Data imported successfully!",
         invalidCode: "Invalid sharing code!",
-        confirmOverwrite: "This will overwrite your current progress. Continue?"
+        confirmOverwrite: "This will overwrite your current progress. Continue?",
+        login: "Login",
+        logout: "Logout",
+        welcome: "Welcome, ",
+        syncing: "Syncing...",
+        synced: "Cloud Synced",
+        syncError: "Sync Error"
     },
     ru: {
         title: "Duty Tracker",
@@ -99,6 +105,12 @@ const translations = {
         dataCopied: "Скопировано!",
         dataImported: "Данные успешно загружены!",
         invalidCode: "Неверный код!",
-        confirmOverwrite: "Это перезапишет ваши текущие данные. Продолжить?"
+        confirmOverwrite: "Это перезапишет ваши текущие данные. Продолжить?",
+        login: "Войти",
+        logout: "Выйти",
+        welcome: "Добро пожаловать, ",
+        syncing: "Синхронизация...",
+        synced: "Синхронизировано",
+        syncError: "Ошибка синхронизации"
     }
 };

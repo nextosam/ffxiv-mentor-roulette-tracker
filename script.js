@@ -1,3 +1,129 @@
+// --- Firebase Integration ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBIf2KrSnS0xUEDvZaeESJ5ASliJw5mYEw",
+    authDomain: "ffxiv-mentor-roulette-tracker.firebaseapp.com",
+    projectId: "ffxiv-mentor-roulette-tracker",
+    storageBucket: "ffxiv-mentor-roulette-tracker.firebasestorage.app",
+    messagingSenderId: "90729014880",
+    appId: "1:90729014880:web:54f894644a8cb1dc6e4505",
+    measurementId: "G-ZJ4PETR0PM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+function signInWithGoogle() {
+    setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+            return signInWithPopup(auth, provider);
+        })
+        .catch(error => {
+            console.error("Login failed:", error);
+        });
+}
+
+function signOutUser() {
+    signOut(auth).catch(error => {
+        console.error("Logout failed:", error);
+    });
+}
+
+function updateSyncUI(status) {
+    const indicator = document.getElementById('syncIndicator');
+    const text = document.getElementById('syncStatus');
+    const icon = indicator.querySelector('img');
+
+    if (!auth.currentUser) {
+        indicator.classList.add('hidden');
+        return;
+    }
+
+    indicator.classList.remove('hidden');
+    indicator.classList.remove('syncing', 'synced', 'error');
+
+    // Default to online icon
+    icon.src = 'assets/online_icon.png';
+
+    if (status === 'syncing') {
+        indicator.classList.add('syncing');
+        icon.src = 'assets/sync_Icon.png';
+        text.innerText = t('syncing');
+    } else if (status === 'synced') {
+        indicator.classList.add('synced');
+        text.innerText = t('synced');
+        setTimeout(() => {
+            if (indicator.classList.contains('synced')) {
+                indicator.classList.remove('synced');
+                text.innerText = "";
+            }
+        }, 3000);
+    } else if (status === 'error') {
+        indicator.classList.add('error');
+        icon.src = 'assets/disconnected_Icon.png';
+        text.innerText = t('syncError');
+    }
+}
+
+let syncTimeout;
+function syncToCloud(data) {
+    if (!auth.currentUser) return;
+
+    updateSyncUI('syncing');
+    clearTimeout(syncTimeout);
+
+    syncTimeout = setTimeout(async () => {
+        try {
+            await setDoc(doc(db, "users", auth.currentUser.uid), {
+                trackerData: data,
+                lastUpdated: new Date().toISOString()
+            }, { merge: true });
+            updateSyncUI('synced');
+        } catch (error) {
+            console.error("Cloud sync failed:", error);
+            updateSyncUI('error');
+        }
+    }, 2000); // 2 second debounce
+}
+
+onAuthStateChanged(auth, async (user) => {
+    const loginBtn = document.getElementById('loginBtn');
+    const userProfile = document.getElementById('userProfile');
+    const userName = document.getElementById('userName');
+    const syncIndicator = document.getElementById('syncIndicator');
+
+    if (user) {
+        loginBtn.classList.add('hidden');
+        userProfile.classList.remove('hidden');
+        userName.innerText = `${t('welcome')}${user.displayName}`;
+        updateSyncUI(); // Initialize sync indicator icon/state
+
+        // Load data from cloud on login
+        try {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists() && docSnap.data().trackerData) {
+                const cloudData = docSnap.data().trackerData;
+                // Only load if cloud data is actually different or exists
+                if (cloudData.length > 0 && confirm(t('confirmOverwrite'))) {
+                    loadFromData(cloudData);
+                }
+            }
+        } catch (error) {
+            console.error("Error loading cloud data:", error);
+        }
+    } else {
+        loginBtn.classList.remove('hidden'); // Show login button only when confirmed logged out
+        userProfile.classList.add('hidden');
+        syncIndicator.classList.add('hidden');
+    }
+});
+
 // --- 1. LIBRARIES ---
 const dutyLibrary = {
     "Dungeon - A Realm Reborn": {
@@ -631,6 +757,7 @@ function autoSave() {
     updateOverallProgress();
 
     localStorage.setItem("trackerData", JSON.stringify(data));
+    syncToCloud(data);
 }
 
 function loadFromData(data) {
@@ -802,3 +929,26 @@ function exportToCSV() {
     link.click();
     document.body.removeChild(link);
 }
+
+window.signInWithGoogle = signInWithGoogle;
+window.signOutUser = signOutUser;
+window.toggleLanguage = toggleLanguage;
+window.addRow = addRow;
+window.deleteRow = deleteRow;
+window.updateDutyNames = updateDutyNames;
+window.applyNameColor = applyNameColor;
+window.applyJobColor = applyJobColor;
+window.applyCheckColor = applyCheckColor;
+window.togglePickerConfig = togglePickerConfig;
+window.rollJob = rollJob;
+window.openStats = openStats;
+window.showTab = showTab;
+window.closeStats = closeStats;
+window.openDataModal = openDataModal;
+window.closeDataModal = closeDataModal;
+window.exportToFile = exportToFile;
+window.importFromFile = importFromFile;
+window.exportToString = exportToString;
+window.importFromString = importFromString;
+window.exportToCSV = exportToCSV;
+window.autoSave = autoSave;

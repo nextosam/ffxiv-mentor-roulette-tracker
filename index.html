@@ -14,6 +14,19 @@
                 data-i18n="dataManagementTitle">Import/Export</span>
         </button>
 
+        <div class="auth-section">
+            <div id="syncIndicator" class="sync-indicator hidden">
+                <img src="assets/online_icon.png" alt="sync">
+                <span id="syncStatus"></span>
+            </div>
+            <div id="userProfile" class="user-profile hidden">
+                <span id="userName"></span>
+                <button onclick="signOutUser()" class="ffxiv-btn btn-crimson" data-i18n="logout">Logout</button>
+            </div>
+            <button id="loginBtn" onclick="signInWithGoogle()" class="ffxiv-btn btn-blue hidden"
+                data-i18n="login">Login</button>
+        </div>
+
         <div class="lang-switcher">
             <button onclick="toggleLanguage()" class="ffxiv-btn lang-btn">EN / RU</button>
         </div>
@@ -76,7 +89,7 @@
         </div>
     </div>
     <script src="translations.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 
     <div id="statsModal" class="modal-overlay hidden">
         <div class="modal-content">
