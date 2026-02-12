@@ -28,7 +28,7 @@
     </div>
 
     <div class="picker-wrapper">
-        <button class="ffxiv-btn btn-crimson picker-trigger" onclick="togglePickerConfig()">
+        <button id="jobPickerBtn" class="ffxiv-btn btn-crimson picker-trigger" onclick="togglePickerConfig(event)">
             <img src="assets/job_picker_icon.png" class="picker-icon"> <span data-i18n="randomJobPicker">Random Job
                 Picker</span>
         </button>
@@ -79,7 +79,7 @@
             </tbody>
         </table>
         <div class="bottom-controls">
-            <button class="ffxiv-btn btn-blue picker-trigger" onclick="addRow()" data-i18n="addNewEntry">+ Add New
+            <button class="ffxiv-btn btn-blue" onclick="addRow()" data-i18n="addNewEntry">+ Add New
                 Entry</button>
         </div>
     </div>

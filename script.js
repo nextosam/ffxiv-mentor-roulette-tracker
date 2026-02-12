@@ -268,7 +268,8 @@ function applyCheckColor(el) {
 
 //job picker i think
 
-function togglePickerConfig() {
+function togglePickerConfig(event) {
+    if (event) event.stopPropagation();
     const menu = document.getElementById('pickerConfig');
     menu.classList.toggle('hidden');
     if (!menu.classList.contains('hidden')) {
@@ -574,20 +575,19 @@ function closeStats() {
 
 // 7. Click Outside to Close Logic
 window.onclick = function (event) {
-    // Modals
-    const modal = document.getElementById("statsModal");
-    if (event.target === modal) {
+    // 1. Stats Modal Close (Click outside content)
+    const statsModal = document.getElementById("statsModal");
+    if (event.target === statsModal) {
         closeStats();
     }
 
-    // Job Picker Close
+    // 2. Job Picker Close (Click outside button and menu)
     const pickerMenu = document.getElementById('pickerConfig');
-    const pickerTrigger = document.querySelector('.picker-trigger');
+    const pickerBtn = document.getElementById('jobPickerBtn');
 
-    // If text is not hidden ...
-    if (!pickerMenu.classList.contains('hidden')) {
-        // ... and we didn't click the menu or the button
-        if (!pickerMenu.contains(event.target) && event.target !== pickerTrigger) {
+    if (pickerMenu && !pickerMenu.classList.contains('hidden')) {
+        // If the click is NOT inside the menu AND NOT on the trigger button (or its children like the icon)
+        if (!pickerMenu.contains(event.target) && !pickerBtn.contains(event.target)) {
             pickerMenu.classList.add('hidden');
         }
     }
