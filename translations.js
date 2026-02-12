@@ -41,7 +41,14 @@ const translations = {
         noDutiesTracked: "No duties tracked yet.",
         topDuties: "🔥 Top 5 Most Run Duties",
         noDutiesRecorded: "No duties recorded yet.",
-        deleteConfirm: "Confirm Delete"
+        deleteConfirm: "Confirm Delete",
+        dataManagementTitle: "Import/Export",
+        exportToString: "Export to String",
+        importFromString: "Import from String",
+        dataCopied: "Data copied to clipboard!",
+        dataImported: "Data imported successfully!",
+        invalidCode: "Invalid sharing code!",
+        confirmOverwrite: "This will overwrite your current progress. Continue?"
     },
     ru: {
         title: "Duty Tracker",
@@ -85,6 +92,13 @@ const translations = {
         noDutiesTracked: "Данжи еще не отслеживались.",
         topDuties: "🔥 Топ 5 частых данжей",
         noDutiesRecorded: "Записи о данжах отсутствуют.",
-        deleteConfirm: "Удалить?"
+        deleteConfirm: "Удалить?",
+        dataManagementTitle: "Сохранить/Загрузить",
+        exportToString: "Сохранить в строку",
+        importFromString: "Загрузить из строки",
+        dataCopied: "Скопировано!",
+        dataImported: "Данные успешно загружены!",
+        invalidCode: "Неверный код!",
+        confirmOverwrite: "Это перезапишет ваши текущие данные. Продолжить?"
     }
 };

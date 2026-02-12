@@ -674,3 +674,24 @@ h1 {
     font-size: 0.85rem;
     min-width: 80px;
 }
+
+/* Data Modal Specifics */
+.data-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.data-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.data-modal-body hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #b39c56;
+    margin: 10px 0;
+}

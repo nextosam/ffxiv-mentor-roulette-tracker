@@ -573,12 +573,28 @@ function closeStats() {
     document.body.classList.remove("no-scroll"); // Unlock scroll
 }
 
+function openDataModal() {
+    document.getElementById("dataModal").classList.remove("hidden");
+    document.body.classList.add("no-scroll");
+}
+
+function closeDataModal() {
+    document.getElementById("dataModal").classList.add("hidden");
+    document.body.classList.remove("no-scroll");
+}
+
 // 7. Click Outside to Close Logic
 window.onclick = function (event) {
     // 1. Stats Modal Close (Click outside content)
     const statsModal = document.getElementById("statsModal");
     if (event.target === statsModal) {
         closeStats();
+    }
+
+    // 2. Data Management Modal Close (Click outside content)
+    const dataModal = document.getElementById("dataModal");
+    if (event.target === dataModal) {
+        closeDataModal();
     }
 
     // 2. Job Picker Close (Click outside button and menu)
@@ -688,6 +704,64 @@ function importFromFile(input) {
         }
     };
     reader.readAsText(file);
+}
+
+function exportToString() {
+    const data = localStorage.getItem("trackerData");
+    if (!data) return alert(t('statsAlert'));
+
+    try {
+        // UTF-8 safe Base64 encoding
+        const base64 = btoa(unescape(encodeURIComponent(data)));
+
+        navigator.clipboard.writeText(base64).then(() => {
+            const btn = document.getElementById('exportStringBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<img src="assets/MainIcon35-export.png" class="btn-icon"> ${t('dataCopied')}`;
+            btn.classList.replace('btn-cyan', 'btn-green');
+
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.replace('btn-green', 'btn-cyan');
+            }, 2000);
+        });
+    } catch (e) {
+        console.error('Export error:', e);
+        alert("Error creating export string.");
+    }
+}
+
+function importFromString() {
+    const code = prompt("Paste your sharing code here:");
+    if (!code) return;
+
+    try {
+        // UTF-8 safe Base64 decoding
+        const decoded = decodeURIComponent(escape(atob(code.trim())));
+        const data = JSON.parse(decoded);
+
+        if (Array.isArray(data)) {
+            if (confirm(t('confirmOverwrite'))) {
+                loadFromData(data);
+                autoSave();
+
+                // Visual feedback
+                const btn = document.getElementById('importStringBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<img src="assets/MainIcon35-import.png" class="btn-icon"> ${t('dataImported')}`;
+                btn.classList.replace('btn-gold', 'btn-green');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('btn-green', 'btn-gold');
+                }, 2000);
+            }
+        } else {
+            alert(t('invalidCode'));
+        }
+    } catch (e) {
+        console.error('Import error:', e);
+        alert(t('invalidCode'));
+    }
 }
 
 function exportToCSV() {

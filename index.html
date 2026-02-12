@@ -9,17 +9,9 @@
 
 <body>
     <div class="toolbar">
-        <button onclick="exportToFile()" class="ffxiv-btn btn-cyan">
-            <img src="assets/MainIcon35-export.png" class="btn-icon"> <span data-i18n="exportToFile">Export to
-                File</span>
-        </button>
-        <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
-        <button onclick="document.getElementById('importFile').click()" class="ffxiv-btn btn-gold">
-            <img src="assets/MainIcon35-import.png" class="btn-icon"> <span data-i18n="importFile">Import File</span>
-        </button>
-        <button class="ffxiv-btn btn-green" onclick="exportToCSV()">
-            <img src="assets/MainIcon35-excel.png" class="btn-icon"> <span data-i18n="exportToExcel">Export to Excel
-                (CSV)</span>
+        <button onclick="openDataModal()" class="ffxiv-btn btn-gold">
+            <img src="assets/system_config.png" class="btn-icon"> <span
+                data-i18n="dataManagementTitle">Import/Export</span>
         </button>
 
         <div class="lang-switcher">
@@ -94,6 +86,44 @@
                 <button class="close-modal" onclick="closeStats()">×</button>
             </div>
             <div id="statsBody" class="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <div id="dataModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><img src="assets/system_config.png" class="btn-icon"> <span
+                        data-i18n="dataManagementTitle">Import/Export</span></h2>
+                <button class="close-modal" onclick="closeDataModal()">×</button>
+            </div>
+            <div class="modal-body data-modal-body">
+                <div class="data-group">
+                    <button onclick="exportToFile()" class="ffxiv-btn btn-cyan">
+                        <img src="assets/MainIcon35-export.png" class="btn-icon"> <span data-i18n="exportToFile">Export
+                            to File</span>
+                    </button>
+                    <button class="ffxiv-btn btn-green" onclick="exportToCSV()">
+                        <img src="assets/MainIcon35-excel.png" class="btn-icon"> <span data-i18n="exportToExcel">Export
+                            to Excel (CSV)</span>
+                    </button>
+                    <button id="exportStringBtn" class="ffxiv-btn btn-cyan" onclick="exportToString()">
+                        <img src="assets/MainIcon35-export.png" class="btn-icon"> <span
+                            data-i18n="exportToString">Export to String</span>
+                    </button>
+                </div>
+                <hr>
+                <div class="data-group">
+                    <input type="file" id="importFile" style="display:none" onchange="importFromFile(this)">
+                    <button onclick="document.getElementById('importFile').click()" class="ffxiv-btn btn-gold">
+                        <img src="assets/MainIcon35-import.png" class="btn-icon"> <span data-i18n="importFile">Import
+                            File</span>
+                    </button>
+                    <button id="importStringBtn" class="ffxiv-btn btn-gold" onclick="importFromString()">
+                        <img src="assets/MainIcon35-import.png" class="btn-icon"> <span
+                            data-i18n="importFromString">Import from String</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
