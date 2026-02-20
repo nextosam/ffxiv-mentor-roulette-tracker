@@ -494,9 +494,6 @@ h1 {
 /* Clear Rate Card */
 .clear-rate-card {
     text-align: center;
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
-    /* Deep blue MSQ vibe */
-    border: 2px solid #b39c56;
     color: white;
 }
 
@@ -667,6 +664,7 @@ h1 {
     background: rgba(0, 0, 0, 0.3);
     color: #888;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .sync-indicator img {
@@ -786,4 +784,80 @@ h1 {
     border: none;
     border-top: 1px solid #b39c56;
     margin: 10px 0;
+}
+
+/* --- 10. SCROLL BUTTONS --- */
+.scroll-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999;
+}
+
+.scroll-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    /* Circle buttons */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.scroll-btn:hover {
+    transform: scale(1.1);
+}
+
+/* --- 11. ACTIVITY CHART --- */
+.activity-chart-container {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #b39c56;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.activity-chart {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    padding-top: 10px;
+}
+
+.activity-bar-shell {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.activity-bar {
+    width: 100%;
+    background: linear-gradient(to top, #8a1526 0%, #dc143c 100%);
+    border: 1px solid #b39c56;
+    border-bottom: none;
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s ease;
+    cursor: help;
+}
+
+.activity-bar:hover {
+    background: linear-gradient(to top, #a61b2e 0%, #ff4d4d 100%);
+    box-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
+}
+
+.activity-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+    font-size: 0.7rem;
+    color: #888;
 }

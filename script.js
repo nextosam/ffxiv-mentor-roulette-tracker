@@ -17,6 +17,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
+let isSyncPaused = false;
+let pendingCloudData = null;
 
 function signInWithGoogle() {
     setPersistence(auth, browserLocalPersistence)
@@ -67,12 +69,16 @@ function updateSyncUI(status) {
         indicator.classList.add('error');
         icon.src = 'assets/disconnected_Icon.png';
         text.innerText = t('syncError');
+    } else if (status === 'paused') {
+        indicator.classList.add('paused');
+        icon.src = 'assets/disconnected_Icon.png';
+        text.innerText = t('syncPaused');
     }
 }
 
 let syncTimeout;
 function syncToCloud(data) {
-    if (!auth.currentUser) return;
+    if (!auth.currentUser || isSyncPaused) return;
 
     updateSyncUI('syncing');
     clearTimeout(syncTimeout);
@@ -110,8 +116,15 @@ onAuthStateChanged(auth, async (user) => {
             if (docSnap.exists() && docSnap.data().trackerData) {
                 const cloudData = docSnap.data().trackerData;
                 // Only load if cloud data is actually different or exists
-                if (cloudData.length > 0 && confirm(t('confirmOverwrite'))) {
-                    loadFromData(cloudData);
+                if (cloudData.length > 0) {
+                    if (confirm(t('confirmOverwrite'))) {
+                        loadFromData(cloudData);
+                    } else {
+                        // User declined overwrite, pause sync
+                        isSyncPaused = true;
+                        pendingCloudData = cloudData;
+                        updateSyncUI('paused');
+                    }
                 }
             }
         } catch (error) {
@@ -123,6 +136,26 @@ onAuthStateChanged(auth, async (user) => {
         syncIndicator.classList.add('hidden');
     }
 });
+
+function resolveSync() {
+    if (!isSyncPaused || !pendingCloudData) return;
+
+    const choice = prompt(`${t('syncResolutionTitle')}\n\n${t('syncResolutionDetail')}\n\n1. ${t('pullFromCloud')}\n2. ${t('pushToCloud')}\n3. ${t('cancel')}`);
+
+    if (choice === "1") {
+        if (confirm(t('confirmOverwrite'))) {
+            loadFromData(pendingCloudData);
+            isSyncPaused = false;
+            pendingCloudData = null;
+            updateSyncUI('synced');
+        }
+    } else if (choice === "2") {
+        const localData = JSON.parse(localStorage.getItem("trackerData") || "[]");
+        isSyncPaused = false; // Unpause so syncToCloud can work
+        syncToCloud(localData);
+        pendingCloudData = null;
+    }
+}
 
 // --- 1. LIBRARIES ---
 const dutyLibrary = {
@@ -631,16 +664,43 @@ function openStats() {
         `<div class="stat-row"><span>${name}</span> <strong>${count}</strong></div>`
     ).join('');
 
-    // 5. THE FINAL INJECTION (All variables are now ready!)
+    // 5. ACTIVITY CHART MATH
+    let hourlyCounts = Array(24).fill(0);
+    data.forEach(entry => {
+        if (entry.time) {
+            const hourPart = entry.time.split(':')[0];
+            const hour = parseInt(hourPart);
+            if (!isNaN(hour)) hourlyCounts[hour]++;
+        }
+    });
+    const maxHourCount = Math.max(...hourlyCounts, 1);
+
+    // Build Activity Chart HTML
+    let activityChartHtml = `
+        <div class="stat-card">
+            <h3 data-i18n="activityHeader">${t('activityHeader')}</h3>
+            <div class="activity-chart-container">
+                <div class="activity-chart">
+                    ${hourlyCounts.map((count, hr) => `
+                        <div class="activity-bar-shell">
+                            <div class="activity-bar" 
+                                 style="height: ${(count / maxHourCount * 100).toFixed(1)}%;" 
+                                 title="${hr.toString().padStart(2, '0')}:00 - ${count}">
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="activity-labels">
+                    <span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>23</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 6. THE FINAL INJECTION
     const statsBody = document.getElementById("statsBody");
     statsBody.innerHTML = `
-    <div class="overall-summary">
-        <div class="stat-card clear-rate-card">
-            <h3 data-i18n="statsClearRate">${t('statsClearRate')}</h3>
-            <div class="big-stat">${clearRate}%</div>
-            <p>${clearCount} ${t('statsClearsOutOf')} ${data.length} ${t('statsTotalRuns')}</p>
-        </div>
-    </div>
+    ${activityChartHtml}
     
     <div class="stat-tabs">
         <button class="tab-btn active" onclick="showTab('jobs')" data-i18n="tabJobs">${t('tabJobs')}</button>
@@ -668,6 +728,13 @@ function openStats() {
         <div class="stat-card">
             <h3 data-i18n="topDuties">${t('topDuties')}</h3>
             ${topDutiesHtml || `<p data-i18n="noDutiesRecorded">${t('noDutiesRecorded')}</p>`}
+        </div>
+        <div class="stat-card clear-rate-card">
+            <h3 data-i18n="statsClearRate">${t('statsClearRate')}</h3>
+            <div class="stat-row">
+                <span>${clearCount} / ${data.length} ${t('statsTotalRuns')}</span>
+                <strong>${clearRate}%</strong>
+            </div>
         </div>
     </div>
     `;
@@ -781,10 +848,9 @@ function loadFromData(data) {
         applyCheckColor(row.querySelector(".clear-checkbox"));
         row.cells[6].innerText = item.time;
         row.querySelector(".note-input").value = item.note || ""; // Fix for notes
-
-
     });
 
+    localStorage.setItem("trackerData", JSON.stringify(data));
     updateOverallProgress();
 
     isLoading = false; // Loading finished!
@@ -793,6 +859,11 @@ function loadFromData(data) {
 // --- 5. INITIALIZATION ---
 window.onload = () => {
     updateUI();
+
+    const indicator = document.getElementById('syncIndicator');
+    if (indicator) {
+        indicator.onclick = resolveSync;
+    }
 
     const saved = localStorage.getItem("trackerData");
     if (saved) {
@@ -952,3 +1023,21 @@ window.exportToString = exportToString;
 window.importFromString = importFromString;
 window.exportToCSV = exportToCSV;
 window.autoSave = autoSave;
+
+// --- 6. SCROLL LOGIC ---
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+function scrollToBottom() {
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
+window.scrollToTop = scrollToTop;
+window.scrollToBottom = scrollToBottom;

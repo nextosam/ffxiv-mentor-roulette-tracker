@@ -54,7 +54,17 @@ const translations = {
         welcome: "Welcome, ",
         syncing: "Syncing...",
         synced: "Cloud Synced",
-        syncError: "Sync Error"
+        syncError: "Sync Error",
+        scrollToTop: "Scroll to Top",
+        scrollToBottom: "Scroll to Bottom",
+        syncPaused: "Sync Paused",
+        syncResolutionTitle: "Sync Data Conflict",
+        syncResolutionDetail: "Your local data and cloud data are out of sync. Choose how to proceed:",
+        pullFromCloud: "Pull from Cloud (Overwrite Local)",
+        pushToCloud: "Push to Cloud (Overwrite Cloud)",
+        cancel: "Cancel",
+        activityHeader: "Hourly Activity Distribution",
+        goalProgress: "Goal Progress"
     },
     ru: {
         title: "Duty Tracker",
@@ -111,6 +121,16 @@ const translations = {
         welcome: "Добро пожаловать, ",
         syncing: "Синхронизация...",
         synced: "Синхронизировано",
-        syncError: "Ошибка синхронизации"
+        syncError: "Ошибка синхронизации",
+        scrollToTop: "Прокрутить наверх",
+        scrollToBottom: "Прокрутить вниз",
+        syncPaused: "Синхронизация приостановлена",
+        syncResolutionTitle: "Конфликт данных",
+        syncResolutionDetail: "Локальные и облачные данные различаются. Как поступим?",
+        pullFromCloud: "Загрузить из облака (перезаписать таблицу)",
+        pushToCloud: "Выгрузить в облако (перезаписать облако)",
+        cancel: "Отмена",
+        activityHeader: "Распределение активности по часам",
+        goalProgress: "Прогресс цели"
     }
 };
