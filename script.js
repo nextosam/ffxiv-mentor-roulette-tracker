@@ -239,9 +239,9 @@ function updateUI() {
         el.innerText = t(key);
     });
 
-    // Update placeholders for existing rows
-    document.querySelectorAll('.note-input').forEach(el => {
-        el.placeholder = t('placeholderNote');
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
     });
 
     // Update selects already in table
@@ -790,6 +790,12 @@ window.onclick = function (event) {
         closeDataModal();
     }
 
+    // 3. Feedback Modal Close (Click outside content)
+    const feedbackModal = document.getElementById("feedbackModal");
+    if (event.target === feedbackModal) {
+        closeFeedbackModal();
+    }
+
     // 2. Job Picker Close (Click outside button and menu)
     const pickerMenu = document.getElementById('pickerConfig');
     const pickerBtn = document.getElementById('jobPickerBtn');
@@ -1023,6 +1029,57 @@ window.exportToString = exportToString;
 window.importFromString = importFromString;
 window.exportToCSV = exportToCSV;
 window.autoSave = autoSave;
+
+// --- 7. FEEDBACK LOGIC ---
+function openFeedbackModal() {
+    document.getElementById('feedbackModal').classList.remove('hidden');
+    document.body.classList.add('no-scroll');
+    // Note: feedbackText is NOT cleared here to persist text if accidentally closed
+}
+
+function closeFeedbackModal() {
+    document.getElementById('feedbackModal').classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+}
+
+async function submitFeedback() {
+    const text = document.getElementById('feedbackText').value.trim();
+    if (!text) return;
+
+    const btn = document.getElementById('sendFeedbackBtn');
+    const originalText = btn.innerText;
+    btn.disabled = true;
+    btn.innerText = "...";
+
+    try {
+        const response = await fetch('/api/send-feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: text,
+                username: auth.currentUser?.displayName || 'Guest'
+            })
+        });
+
+        if (response.ok) {
+            alert(t('feedbackSuccess'));
+            document.getElementById('feedbackText').value = ''; // Clear text ONLY on success
+            closeFeedbackModal();
+        } else {
+            alert(t('feedbackError'));
+        }
+    } catch (err) {
+        console.error(err);
+        alert(t('feedbackError'));
+    } finally {
+        btn.disabled = false;
+        btn.innerText = originalText;
+    }
+}
+
+window.openFeedbackModal = openFeedbackModal;
+window.closeFeedbackModal = closeFeedbackModal;
+window.submitFeedback = submitFeedback;
 
 // --- 6. SCROLL LOGIC ---
 function scrollToTop() {

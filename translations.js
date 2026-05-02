@@ -64,7 +64,13 @@ const translations = {
         pushToCloud: "Push to Cloud (Overwrite Cloud)",
         cancel: "Cancel",
         activityHeader: "Hourly Activity Distribution",
-        goalProgress: "Goal Progress"
+        goalProgress: "Goal Progress",
+        leaveFeedback: "Leave Feedback",
+        feedbackTitle: "Send Feedback",
+        feedbackPlaceholder: "Have any suggestions? Bugs, forgotten duties or just say hi!",
+        send: "Send",
+        feedbackSuccess: "Feedback sent! Thank you.",
+        feedbackError: "Failed to send feedback. Please try again."
     },
     ru: {
         title: "Duty Tracker",
@@ -131,6 +137,12 @@ const translations = {
         pushToCloud: "Выгрузить в облако (перезаписать облако)",
         cancel: "Отмена",
         activityHeader: "Распределение активности по часам",
-        goalProgress: "Прогресс цели"
+        goalProgress: "Прогресс цели",
+        leaveFeedback: "Оставить отзыв",
+        feedbackTitle: "Отправить отзыв",
+        feedbackPlaceholder: "Есть предложения? Баги, забытые данжи или просто привет!",
+        send: "Отправить",
+        feedbackSuccess: "Отзыв отправлен! Спасибо.",
+        feedbackError: "Не удалось отправить отзыв. Попробуйте еще раз."
     }
 };

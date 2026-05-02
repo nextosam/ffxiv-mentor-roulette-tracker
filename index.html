@@ -14,6 +14,11 @@
                 data-i18n="dataManagementTitle">Import/Export</span>
         </button>
 
+        <button onclick="openFeedbackModal()" class="ffxiv-btn btn-blue">
+            <img src="assets/feedback_icon.png" class="btn-icon"> <span
+                data-i18n="leaveFeedback">Leave Feedback</span>
+        </button>
+
         <div class="auth-section">
             <div id="syncIndicator" class="sync-indicator hidden">
                 <img src="assets/online_icon.png" alt="sync">
@@ -140,6 +145,23 @@
             </div>
         </div>
     </div>
+    <div id="feedbackModal" class="modal-overlay hidden">
+        <div class="modal-content feedback-modal">
+            <div class="modal-header">
+                <h2><img src="assets/feedback_icon.png" class="btn-icon"> <span data-i18n="feedbackTitle">Send Feedback</span></h2>
+                <button class="close-modal" onclick="closeFeedbackModal()">×</button>
+            </div>
+            <div class="modal-body feedback-body">
+                <textarea id="feedbackText" data-i18n-placeholder="feedbackPlaceholder" placeholder="What's on your mind?"></textarea>
+                <div class="feedback-footer">
+                    <button id="sendFeedbackBtn" class="ffxiv-btn btn-green" onclick="submitFeedback()">
+                        <span data-i18n="send">Send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="scroll-buttons">
         <button id="scrollToTopBtn" onclick="scrollToTop()" class="ffxiv-btn scroll-btn" data-i18n-title="scrollToTop">
             ▲
