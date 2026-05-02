@@ -181,7 +181,7 @@ const dutyLibrary = {
     },
     "Dungeon - Dawntrail": {
         color: "#fd96cf",
-        list: ["Ihuykatumu", "Worqor Zormor", "The Skydeep Cenote", "Vanguard", "Origenics", "Alexandria", "Tender Valley", "The Strayborough Deadwalk", "Yuweyawata Field Station", "The Underkeep", "The Meso Terminal", "Mistwake"]
+        list: ["Ihuykatumu", "Worqor Zormor", "The Skydeep Cenote", "Vanguard", "Origenics", "Alexandria", "Tender Valley", "The Strayborough Deadwalk", "Yuweyawata Field Station", "The Underkeep", "The Meso Terminal", "Mistwake", "The Clyteum"]
     },
     "Guildhest": {
         color: "#96fdc8",
@@ -193,7 +193,7 @@ const dutyLibrary = {
     },
     "Trial - Normal": {
         color: "#23e615",
-        list: ["The Bowl of Embers", "The Navel", "The Howling Eye", "Cape Westwind", "The Porta Decumana", "The Chrysalis", "The Steps of Faith", "A Relic Reborn: the Chimera", "A Relic Reborn: the Hydra", "Battle on the Big Bridge", "The Dragon's Neck", "Urth's Fount", "Battle in the Big Keep", "Kugane Ohashi", "The Bowl of Embers (Hard)", "The Howling Eye (Hard)", "The Navel (Hard)", "Thornmarch (Hard)", "The Whorleater (Hard)", "The Striking Tree (Hard)", "Akh Afah Amphitheatre (Hard)", "Thok ast Thok (Hard)", "The Limitless Blue (Hard)", "The Singularity Reactor", "Containment Bay S1T7", "The Final Steps of Faith", "Containment Bay P1T6", "Containment Bay Z1T9", "The Pool of Tribute", "Emanation", "The Royal Menagerie", "The Jade Stoa", "Castrum Fluminis", "The Great Hunt", "Hells' Kier", "The Wreath of Snakes", "The Dancing Plague", "The Crown of the Immaculate", "The Dying Gasp", "Cinder Drift", "The Seat of Sacrifice", "Castrum Marinum", "The Cloud Deck", "The Dark Inside", "The Mothercrystal", "The Final Day", "Storm's Crown", "Mount Ordeals", "The Voidcast Dais", "The Abyssal Fracture", "The Gilded Araya", "Worqor Lar Dor", "Everkeep", "The Interphos", "Recollection", "The Ageless Necropolis", "The Windward Wilds", "Hell on Rails"]
+        list: ["The Bowl of Embers", "The Navel", "The Howling Eye", "Cape Westwind", "The Porta Decumana", "The Chrysalis", "The Steps of Faith", "A Relic Reborn: the Chimera", "A Relic Reborn: the Hydra", "Battle on the Big Bridge", "The Dragon's Neck", "Urth's Fount", "Battle in the Big Keep", "Kugane Ohashi", "The Bowl of Embers (Hard)", "The Howling Eye (Hard)", "The Navel (Hard)", "Thornmarch (Hard)", "The Whorleater (Hard)", "The Striking Tree (Hard)", "Akh Afah Amphitheatre (Hard)", "Thok ast Thok (Hard)", "The Limitless Blue (Hard)", "The Singularity Reactor", "Containment Bay S1T7", "The Final Steps of Faith", "Containment Bay P1T6", "Containment Bay Z1T9", "The Pool of Tribute", "Emanation", "The Royal Menagerie", "The Jade Stoa", "Castrum Fluminis", "The Great Hunt", "Hells' Kier", "The Wreath of Snakes", "The Dancing Plague", "The Crown of the Immaculate", "The Dying Gasp", "Cinder Drift", "The Seat of Sacrifice", "Castrum Marinum", "The Cloud Deck", "The Dark Inside", "The Mothercrystal", "The Final Day", "Storm's Crown", "Mount Ordeals", "The Voidcast Dais", "The Abyssal Fracture", "The Gilded Araya", "Worqor Lar Dor", "Everkeep", "The Interphos", "Recollection", "The Ageless Necropolis", "The Windward Wilds", "Hell on Rails", "The Unmaking"]
     },
     "Trial - Extreme": {
         color: "#e32817",
@@ -204,7 +204,7 @@ const dutyLibrary = {
     "Alliance Raid - Stormblood": { color: "#f5f518", list: ["The Royal City of Rabanastre", "The Ridorana Lighthouse", "The Orbonne Monastery"] },
     "Alliance Raid - Shadowbringers": { color: "#dff518", list: ["The Copied Factory", "The Puppets' Bunker", "The Tower at Paradigm's Breach"] },
     "Alliance Raid - Endwalker": { color: "#d0f518", list: ["Aglaia", "Euphrosyne", "Thaleia"] },
-    "Alliance Raid - Dawntrail": { color: "#baf518", list: ["Jeuno: The First Walk", "San d'Oria: The Second Walk"] },
+    "Alliance Raid - Dawntrail": { color: "#baf518", list: ["Jeuno: The First Walk", "San d'Oria: The Second Walk", "Windurst: The Third Walk"] },
     "Normal Raid - Alexander": {
         color: "#188ef5",
         list: ["Alexander - The Fist of the Father", "Alexander - The Cuff of the Father", "Alexander - The Arm of the Father", "Alexander - The Burden of the Father", "Alexander - The Fist of the Son", "Alexander - The Cuff of the Son", "Alexander - The Arm of the Son", "Alexander - The Burden of the Son", "Alexander - The Eyes of the Creator", "Alexander - The Breath of the Creator", "Alexander - The Heart of the Creator", "Alexander - The Soul of the Creator"]
@@ -337,7 +337,7 @@ function addRow() {
         <td><select class="type-select" onchange="updateDutyNames(this)"><option value="">${t('placeholderType')}</option>${typeOptions.replace('<option value="">--Type--</option>', '')}</select></td>
         <td><select class="name-select" onchange="applyNameColor(this)"><option value="">${t('placeholderName')}</option></select></td>
         <td><select class="job-select" onchange="applyJobColor(this)"><option value="">${t('placeholderJob')}</option>${jobOptions.replace('<option value="">--Job--</option>', '')}</select></td>
-        <td class="clear-cell"><input type="checkbox" class="clear-checkbox" onchange="applyCheckColor(this)"></td>
+        <td class="clear-cell" style="background-color: #c1f0c1;"><input type="checkbox" class="clear-checkbox" checked onchange="applyCheckColor(this)"></td>
         <td style="font-size: 0.8em; color: #666; white-space: nowrap;">${getFormattedTimestamp()}</td>
         <td><input type="text" class="note-input" placeholder="${t('placeholderNote')}"></td>
     `;
