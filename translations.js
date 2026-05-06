@@ -70,7 +70,12 @@ const translations = {
         feedbackPlaceholder: "Have any suggestions? Bugs, forgotten duties or just say hi!",
         send: "Send",
         feedbackSuccess: "Feedback sent! Thank you.",
-        feedbackError: "Failed to send feedback. Please try again."
+        feedbackError: "Failed to send feedback. Please try again.",
+        resetProgress: "Reset Progress",
+        resetModalTitle: "Reset All Progress",
+        resetWarning: "Warning: This will permanently delete ALL your progress. It is highly recommended to export your data first.",
+        confirmReset: "Yes, Reset Everything",
+        cancelReset: "No, take me back"
     },
     ru: {
         title: "Duty Tracker",
@@ -143,6 +148,11 @@ const translations = {
         feedbackPlaceholder: "Есть предложения? Баги, забытые данжи или просто привет!",
         send: "Отправить",
         feedbackSuccess: "Отзыв отправлен! Спасибо.",
-        feedbackError: "Не удалось отправить отзыв. Попробуйте еще раз."
+        feedbackError: "Не удалось отправить отзыв. Попробуйте еще раз.",
+        resetProgress: "Сбросить прогресс",
+        resetModalTitle: "Сброс всего прогресса",
+        resetWarning: "Внимание: Это навсегда удалит ВЕСЬ ваш прогресс. Настоятельно рекомендуется сначала экспортировать ваши данные.",
+        confirmReset: "Да, сбросить всё",
+        cancelReset: "Нет, верните меня назад"
     }
 };

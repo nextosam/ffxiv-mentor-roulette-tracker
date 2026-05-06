@@ -806,6 +806,12 @@ window.onclick = function (event) {
             pickerMenu.classList.add('hidden');
         }
     }
+
+    // 4. Reset Progress Modal Close (Click outside content)
+    const resetModal = document.getElementById("resetModal");
+    if (event.target === resetModal) {
+        closeResetModal();
+    }
 }
 // --- 4. DATA LOGIC (SAVE/LOAD) ---
 function autoSave() {
@@ -1098,3 +1104,54 @@ function scrollToBottom() {
 
 window.scrollToTop = scrollToTop;
 window.scrollToBottom = scrollToBottom;
+
+// --- 8. RESET PROGRESS LOGIC ---
+function openResetModal() {
+    const btn = document.querySelector('.subtle-reset-btn');
+    if (btn) {
+        btn.classList.add('disabled');
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.3';
+        
+        setTimeout(() => {
+            btn.classList.remove('disabled');
+            btn.style.pointerEvents = 'auto';
+            btn.style.opacity = '1';
+        }, 500);
+    }
+    
+    document.getElementById('resetModal').classList.remove('hidden');
+    document.body.classList.add('no-scroll');
+}
+
+function closeResetModal() {
+    document.getElementById('resetModal').classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+}
+
+function resetProgress() {
+    // Only remove tracker data, keep settings!
+    localStorage.removeItem("trackerData");
+    
+    // Reset internal state
+    runCount = 0;
+    
+    // Clear the UI table
+    document.getElementById("trackerBody").innerHTML = "";
+    
+    // Update progress bar/stats
+    updateOverallProgress();
+    
+    // Close both modals
+    closeResetModal();
+    closeDataModal();
+    
+    // Optional: Sync empty data to cloud if logged in
+    if (auth.currentUser) {
+        syncToCloud([]);
+    }
+}
+
+window.openResetModal = openResetModal;
+window.closeResetModal = closeResetModal;
+window.resetProgress = resetProgress;

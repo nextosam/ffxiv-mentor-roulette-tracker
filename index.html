@@ -142,6 +142,12 @@
                             data-i18n="importFromString">Import from String</span>
                     </button>
                 </div>
+                <hr>
+                <div class="data-group">
+                    <button onclick="openResetModal()" class="ffxiv-btn btn-crimson">
+                        <span data-i18n="resetProgress">Reset Progress</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -157,6 +163,22 @@
                     <button id="sendFeedbackBtn" class="ffxiv-btn btn-green" onclick="submitFeedback()">
                         <span data-i18n="send">Send</span>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="resetModal" class="modal-overlay hidden">
+        <div class="modal-content reset-modal">
+            <div class="modal-header">
+                <h2><span data-i18n="resetModalTitle">Reset All Progress</span></h2>
+                <button class="close-modal" onclick="closeResetModal()">×</button>
+            </div>
+            <div class="modal-body reset-body">
+                <p class="warning-text" data-i18n="resetWarning">Warning: This will permanently delete ALL your progress. It is highly recommended to export your data first.</p>
+                <div class="reset-actions">
+                    <button class="subtle-reset-btn" onclick="resetProgress()" data-i18n="confirmReset">Yes, Reset Everything</button>
+                    <button class="ffxiv-btn btn-gold" onclick="closeResetModal()" data-i18n="cancelReset">No, take me back</button>
                 </div>
             </div>
         </div>
