@@ -709,24 +709,36 @@ function openStats() {
 
     <div id="jobStats" class="tab-content">
         <div class="stat-card">
-            <h3 data-i18n="roleBreakdown">${t('roleBreakdown')}</h3>
+            <h3 class="stat-card-header">
+                <img src="assets/role_breakdown.svg" class="header-icon" alt="">
+                <span data-i18n="roleBreakdown">${t('roleBreakdown')}</span>
+            </h3>
             <div class="stat-row"><span data-i18n="roleTanks">${t('roleTanks')}</span> <span>${roleCounts["Tanks"]}</span></div>
             <div class="stat-row"><span data-i18n="roleHealers">${t('roleHealers')}</span> <span>${roleCounts["Healers"]}</span></div>
             <div class="stat-row"><span data-i18n="roleDPS">${t('roleDPS')}</span> <span>${roleCounts["DPS"]}</span></div>
         </div>
         <div class="stat-card">
-            <h3 data-i18n="jobUsage">${t('jobUsage')}</h3>
+            <h3 class="stat-card-header">
+                <img src="assets/job_usage.svg" class="header-icon" alt="">
+                <span data-i18n="jobUsage">${t('jobUsage')}</span>
+            </h3>
             ${jobRowsHtml || `<p data-i18n="noJobsTracked">${t('noJobsTracked')}</p>`}
         </div>
     </div>
 
     <div id="dutyStats" class="tab-content hidden">
         <div class="stat-card">
-            <h3 data-i18n="expansionBreakdown">${t('expansionBreakdown')}</h3>
+            <h3 class="stat-card-header">
+                <img src="assets/types_breakdown.svg" class="header-icon" alt="">
+                <span data-i18n="expansionBreakdown">${t('expansionBreakdown')}</span>
+            </h3>
             ${typeRowsHtml || `<p data-i18n="noDutiesTracked">${t('noDutiesTracked')}</p>`}
         </div>
         <div class="stat-card">
-            <h3 data-i18n="topDuties">${t('topDuties')}</h3>
+            <h3 class="stat-card-header">
+                <img src="assets/top_duties.svg" class="header-icon" alt="">
+                <span data-i18n="topDuties">${t('topDuties')}</span>
+            </h3>
             ${topDutiesHtml || `<p data-i18n="noDutiesRecorded">${t('noDutiesRecorded')}</p>`}
         </div>
         <div class="stat-card clear-rate-card">

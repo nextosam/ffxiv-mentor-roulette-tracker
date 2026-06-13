@@ -483,7 +483,17 @@ h1 {
     border-bottom: 1px solid #b39c56;
     padding-bottom: 5px;
     font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
+.stat-card h3 .header-icon {
+    width: 20px;
+    height: 20px;
+    filter: invert(86%) sepia(12%) saturate(1313%) hue-rotate(357deg) brightness(95%) contrast(92%);
+}
+
 
 .stat-row {
     display: flex;
